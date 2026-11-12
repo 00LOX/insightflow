@@ -1,0 +1,15 @@
+name: Bug report / 问题反馈
+description: Tell us what broke without sharing private data.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened? / 出现什么问题？
+      description: Include steps, expected behavior, browser and screen size. Remove email addresses, notes, tokens and confirmation links.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 运行环境
+      description: App version, operating system, browser, self-hosted or hosted demo. Never attach environment files or database backups.

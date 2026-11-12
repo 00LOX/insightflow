@@ -1,0 +1,15 @@
+name: Feature request / 使用建议
+description: Describe the reading problem you want to solve.
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Your use case / 使用场景
+      description: What are you trying to read or understand? Explain the current difficulty and a simpler interaction.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: RSS source / 来源（可选）
+      description: For a new source, provide the official RSS URL and content usage terms.

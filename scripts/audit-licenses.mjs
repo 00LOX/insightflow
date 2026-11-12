@@ -1,0 +1,17 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const lock=readFileSync('pnpm-lock.yaml','utf8').replaceAll('\r','');
+const section=lock.split('\npackages:\n')[1]?.split('\nsnapshots:\n')[0];
+if(!section)throw new Error('Lockfile packages section missing');
+const packages=[...section.matchAll(/^  (?:'([^'\r\n]+@[^'\r\n]+)'|([^\s'\r\n]+@[^\s'\r\n]+)):[ \t]*$/gm)].map(m=>m[1]??m[2]);
+const installed=JSON.parse(readFileSync('docs/licenses.json','utf8'));
+const known=new Map();
+for(const [license,items] of Object.entries(installed))for(const p of items)for(const version of p.versions)known.set(p.name+'@'+version,{name:p.name,version,license,source:'installed pnpm license metadata'});
+const results=[];let index=0;
+await Promise.all(Array.from({length:6},async()=>{while(index<packages.length){const id=packages[index++];if(known.has(id)){results.push(known.get(id));continue}const at=id.lastIndexOf('@'),name=id.slice(0,at),version=id.slice(at+1);try{const response=await fetch('https://registry.npmjs.org/'+encodeURIComponent(name)+'/'+encodeURIComponent(version),{signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error('metadata unavailable');const p=await response.json();const license=typeof p.license==='string'?p.license:p.license?.type;results.push({name,version,license:license??'UNKNOWN',source:'npm registry version metadata'})}catch{results.push({name,version,license:'UNKNOWN',source:'metadata unavailable'})}}}));
+results.sort((a,b)=>(a.name+'@'+a.version).localeCompare(b.name+'@'+b.version));
+const unknown=results.filter(p=>p.license==='UNKNOWN');
+const summary={};for(const p of results)summary[p.license]=(summary[p.license]??0)+1;
+writeFileSync('docs/licenses-lock.json',JSON.stringify({lock_sha256:createHash('sha256').update(lock).digest('hex'),packages:results,summary,unknown:unknown.map(p=>p.name+'@'+p.version)},null,2)+'\n');
+console.log(JSON.stringify({lock_packages:packages.length,summary,unknown:unknown.map(p=>p.name+'@'+p.version)}));
+if(unknown.length)process.exitCode=1;
