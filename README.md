@@ -1,5 +1,7 @@
 # InsightFlow
 
+[![Checks](https://github.com/00LOX/insightflow/actions/workflows/ci.yml/badge.svg)](https://github.com/00LOX/insightflow/actions/workflows/ci.yml)
+
 Read the news. Understand it in Chinese. Keep your own ideas.
 
 A minimal, self-hostable RSS reader built with Next.js, React, TypeScript, Tailwind CSS and Supabase. Two main workspaces: **Home** and **My Space**. The interface is currently in Chinese.
@@ -62,7 +64,7 @@ pnpm build
 python scripts/check-source-secrets.py --history --build
 ```
 
-Database, isolation and browser checks are documented in [Development](docs/DEVELOPMENT.md). The V0.1 local report is in [TEST-V0.1.md](docs/TEST-V0.1.md). AI regression fixtures do not spend real API credits. Prepared GitHub Actions have not yet run on GitHub.
+Database, isolation and browser checks are documented in [Development](docs/DEVELOPMENT.md). The V0.1 local report is in [TEST-V0.1.md](docs/TEST-V0.1.md). AI regression fixtures do not spend real API credits. GitHub Actions passed unit tests, type checking, lint, build and credential scans on Linux. [First successful run](https://github.com/00LOX/insightflow/actions/runs/43266686181).
 
 ## Scope and contribution
 

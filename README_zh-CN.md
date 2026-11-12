@@ -1,5 +1,7 @@
 # InsightFlow
 
+[![Checks](https://github.com/00LOX/insightflow/actions/workflows/ci.yml/badge.svg)](https://github.com/00LOX/insightflow/actions/workflows/ci.yml)
+
 读懂资讯，留下自己的想法。一个极简、可自部署的 RSS 阅读工具。
 
 [English](README.md) · [开发说明](docs/DEVELOPMENT.md) · [参与贡献](CONTRIBUTING.md) · [部署方案](docs/DEPLOYMENT.md)
@@ -59,7 +61,7 @@ pnpm build
 python scripts/check-source-secrets.py --history --build
 ```
 
-数据库、双账号隔离、安全和浏览器检查见 [开发说明](docs/DEVELOPMENT.md)，本轮结果见 [V0.1 测试报告](docs/TEST-V0.1.md)。AI 回归使用明确模拟夹具，不消耗真实模型额度。CI 已配置，尚未在 GitHub 执行。
+数据库、双账号隔离、安全和浏览器检查见 [开发说明](docs/DEVELOPMENT.md)，本轮结果见 [V0.1 测试报告](docs/TEST-V0.1.md)。AI 回归使用明确模拟夹具，不消耗真实模型额度。GitHub Actions 已在 Linux 通过单元测试、类型检查、Lint、构建与秘密扫描。[首次成功运行](https://github.com/00LOX/insightflow/actions/runs/43266686181)。
 
 本轮没有收费、自动推送、定时采集或复杂 Agent。手机和平板是 Chromium 尺寸仿真，尚未验证真实 iOS Safari。当前邮箱注册需正式 SMTP；OAuth 入口尚未实现。免费托管的容量和中国大陆访问速度须部署后实测。
 
